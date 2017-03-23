@@ -1,12 +1,14 @@
 package main
 
 import (
-	"fmt"
-	"html"
 	"log"
 	"net/http"
-
 	"github.com/gorilla/mux"
+	"encoding/json"
+	"fmt"
+	"database/sql"
+	_ "github.com/lib/pq"
+)
 
 type Car struct {
 	Id int `json:"id"`
@@ -33,3 +35,34 @@ func main() {
 }
 
 func getCars(w http.ResponseWriter, r *http.Request) {
+
+	dbinfo := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable",
+		DB_USER, DB_PASSWORD, DB_NAME)
+	db, err := sql.Open("postgres", dbinfo)
+	checkErr(err)
+	defer db.Close()
+
+	rows, err := db.Query("SELECT * FROM car")
+	checkErr(err)
+
+	var cars []Car
+
+	for rows.Next() {
+		var car Car
+		var description sql.NullString
+
+		err = rows.Scan(&car.Id, &car.Status, &car.Model, &car.Age, &car.Race, &car.Fuel_type, &description)
+		checkErr(err)
+
+		car.Description = description.String
+		cars = append(cars, car)
+	}
+
+	json.NewEncoder(w).Encode(cars)
+}
+
+func checkErr(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
