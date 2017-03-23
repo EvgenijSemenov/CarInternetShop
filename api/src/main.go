@@ -7,6 +7,16 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+
+type Car struct {
+	Id int `json:"id"`
+	Status string `json:"status"`
+	Model string `json:"model"`
+	Age int `json:"age"`
+	Race int `json:"race"`
+	Fuel_type string `json:"fuel_type"`
+	Description string `json:"description"`
+}
 )
 
 func main() {
