@@ -17,6 +17,12 @@ type Car struct {
 	Fuel_type string `json:"fuel_type"`
 	Description string `json:"description"`
 }
+
+const (
+	DB_USER     = "postgres"
+	DB_PASSWORD = "secret"
+	DB_NAME     = "shop_car"
+
 )
 
 func main() {
