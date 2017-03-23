@@ -23,14 +23,13 @@ const (
 	DB_PASSWORD = "secret"
 	DB_NAME     = "shop_car"
 
+	API_URI = "/api/v1/"
 )
 
 func main() {
 	router := mux.NewRouter().StrictSlash(true)
-	router.HandleFunc("/", Index)
+	router.HandleFunc(API_URI + "car", getCars)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
-func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
-}
+func getCars(w http.ResponseWriter, r *http.Request) {
