@@ -147,6 +147,32 @@ func deleteCar(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode("OK")
 }
+
+func updateCar(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("# Update car")
+
+	var db sql.DB = getDBConn()
+
+	stmt, err := db.Prepare("UPDATE car SET status=$2, model=$3, age=$4, race=$5, fuel_type=$6, price=$7, description=$8 WHERE id=$1")
+	checkErr(err)
+
+	car := getCarFromRequest(r)
+
+	fmt.Println(car.Id)
+
+	res, err := stmt.Exec(car.Id, car.Status, car.Model, car.Age, car.Race, car.Fuel_type, car.Price, car.Description)
+	checkErr(err)
+
+	affect, err := res.RowsAffected()
+	checkErr(err)
+
+	fmt.Println(affect, "rows changed")
+
+	w.Header().Add("Access-Control-Allow-Origin", "*")
+	w.Header().Add("Access-Control-Allow-Methods", "PUT")
+
+	json.NewEncoder(w).Encode("OK")
+}
 func checkErr(err error) {
 	if err != nil {
 		panic(err)
