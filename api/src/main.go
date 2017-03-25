@@ -173,6 +173,47 @@ func updateCar(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode("OK")
 }
+
+func getCarFromRequest(r *http.Request) Car {
+	var car Car
+
+	var parsed map[string]interface{}
+
+	body, err := ioutil.ReadAll(r.Body)
+	fmt.Println("getCarFromRequest body:" + string(body))
+	checkErr(err)
+
+	err = json.Unmarshal(body, &parsed)
+	checkErr(err)
+
+	if (parsed["id"] != nil) {
+		car.Id = int(parsed["id"].(float64))
+	}
+	if (parsed["status"] != nil) {
+		car.Status = parsed["status"].(string)
+	}
+	if (parsed["model"] != nil) {
+		car.Model = parsed["model"].(string)
+	}
+	if (parsed["fuel_type"] != nil) {
+		car.Fuel_type = parsed["fuel_type"].(string)
+	}
+	if (parsed["description"] != nil) {
+		car.Description = parsed["description"].(string)
+	}
+	if (parsed["age"] != nil) {
+		car.Age = int(parsed["age"].(float64))
+	}
+	if (parsed["race"] != nil) {
+		car.Race = int(parsed["race"].(float64))
+	}
+	if (parsed["price"] != nil) {
+		car.Price = int64(parsed["price"].(float64))
+	}
+
+	return car
+}
+
 func checkErr(err error) {
 	if err != nil {
 		panic(err)
