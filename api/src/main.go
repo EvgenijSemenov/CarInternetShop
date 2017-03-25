@@ -36,13 +36,15 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
-func getCars(w http.ResponseWriter, r *http.Request) {
-
+func getDBConn() sql.DB {
 	dbinfo := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable",
 		DB_USER, DB_PASSWORD, DB_NAME)
 	db, err := sql.Open("postgres", dbinfo)
 	checkErr(err)
 	defer db.Close()
+
+	return *db;
+}
 
 	rows, err := db.Query("SELECT * FROM car")
 	checkErr(err)
