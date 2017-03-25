@@ -46,6 +46,11 @@ func getDBConn() sql.DB {
 	return *db;
 }
 
+func getAllCars(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("# Get all cars")
+
+	var db sql.DB = getDBConn()
+
 	rows, err := db.Query("SELECT * FROM car")
 	checkErr(err)
 
@@ -54,13 +59,17 @@ func getDBConn() sql.DB {
 	for rows.Next() {
 		var car Car
 		var description sql.NullString
+		var price sql.NullInt64
 
-		err = rows.Scan(&car.Id, &car.Status, &car.Model, &car.Age, &car.Race, &car.Fuel_type, &description)
+		err = rows.Scan(&car.Id, &car.Status, &car.Model, &car.Age, &car.Race, &car.Fuel_type, &description, &price)
 		checkErr(err)
 
+		car.Price = price.Int64
 		car.Description = description.String
 		cars = append(cars, car)
 	}
+
+	w.Header().Add("Access-Control-Allow-Origin", "*")
 
 	json.NewEncoder(w).Encode(cars)
 }
