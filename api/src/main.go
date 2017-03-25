@@ -123,6 +123,30 @@ func addCar(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(car)
 }
+
+func deleteCar(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("# Delete car")
+
+	var db sql.DB = getDBConn()
+
+	stmt, err := db.Prepare("delete from car where id=$1")
+	checkErr(err)
+
+	car := getCarFromRequest(r)
+
+	res, err := stmt.Exec(car.Id)
+	checkErr(err)
+
+	affect, err := res.RowsAffected()
+	checkErr(err)
+
+	fmt.Println(affect, "rows changed")
+
+	w.Header().Add("Access-Control-Allow-Origin", "*")
+	w.Header().Add("Access-Control-Allow-Methods", "DELETE")
+
+	json.NewEncoder(w).Encode("OK")
+}
 func checkErr(err error) {
 	if err != nil {
 		panic(err)
