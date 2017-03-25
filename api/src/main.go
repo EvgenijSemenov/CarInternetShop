@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"database/sql"
 	_ "github.com/lib/pq"
+	"io/ioutil"
 )
 
 type Car struct {
