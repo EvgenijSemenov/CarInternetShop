@@ -1,0 +1,44 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Редагувати товар</h3>
+  </div>
+  <div class="panel-body">
+    <form>
+      <input type="hidden" name="id" value="{{car.id}}" [(ngModel)]="car.id">
+      <div class="form-group">
+        <label for="model">Марка</label>
+        <input type="text" class="form-control" [(ngModel)]="car.model" name="model" id="model" placeholder="Mercedes-Benz E-Class TSI TURBO AUTOMAT 2013" required/>
+      </div>
+      <div class="row">
+        <div class="col-md-3 form-group">
+          <label for="status">Стан</label>
+          <input type="text" class="form-control" [(ngModel)]="car.status" name="status" id="status" placeholder="б/у" required>
+        </div>
+        <div class="col-md-2 form-group">
+          <label for="age">Рік випуску</label>
+          <input type="number" class="form-control" [(ngModel)]="car.age" name="age" id="age" placeholder="2017" required>
+        </div>
+        <div class="col-md-2 form-group">
+          <label for="race">Пробіг (км)</label>
+          <input type="number" class="form-control" [(ngModel)]="car.race" name="race" id="race" placeholder="163000" required>
+        </div>
+        <div class="col-md-2 form-group">
+          <label for="fuel-type">Тип пального</label>
+          <input type="text" class="form-control" [(ngModel)]="car.fuel_type" name="fuel_type" id="fuel-type" placeholder="Газ/бензин" required>
+        </div>
+        <div class="col-md-3 form-group">
+          <label for="price">Ціна (у.о.)</label>
+          <input type="number" class="form-control" [(ngModel)]="car.price" name="price" id="price" placeholder="20300" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="description">Опис</label>
+        <textarea class="form-control" name="description" [(ngModel)]="car.description" rows="7" id="description" placeholder="Опис автомобіля"></textarea>
+      </div>
+      <div class="pull-right">
+        <button type="submit" class="btn btn-success" (click)="updateCar()">Зберегти</button>
+        <button type="submit" class="btn btn-danger" routerLink=''>Відмінити</button>
+      </div>
+    </form>
+  </div>
+</div>
