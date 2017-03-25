@@ -27,7 +27,7 @@ const (
 	DB_PASSWORD = "secret"
 	DB_NAME = "shop_car"
 
-	API_URI = "/api/v1/"
+	API_URI = "/api/v1"
 )
 
 func main() {
