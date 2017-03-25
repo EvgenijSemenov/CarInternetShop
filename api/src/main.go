@@ -74,6 +74,36 @@ func getAllCars(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(cars)
 }
 
+func getCar(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("# Get car")
+
+	var db sql.DB = getDBConn()
+
+	vars := mux.Vars(r)
+	getCarId := vars["carId"]
+
+	rows, err := db.Query("SELECT * FROM car WHERE id=" + getCarId)
+	checkErr(err)
+
+	var cars []Car
+
+	for rows.Next() {
+		var car Car
+		var description sql.NullString
+		var price sql.NullInt64
+
+		err = rows.Scan(&car.Id, &car.Status, &car.Model, &car.Age, &car.Race, &car.Fuel_type, &description, &price)
+		checkErr(err)
+
+		car.Price = price.Int64
+		car.Description = description.String
+		cars = append(cars, car)
+	}
+
+	w.Header().Add("Access-Control-Allow-Origin", "*")
+
+	json.NewEncoder(w).Encode(cars)
+}
 func checkErr(err error) {
 	if err != nil {
 		panic(err)
