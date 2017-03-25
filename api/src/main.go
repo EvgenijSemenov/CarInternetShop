@@ -104,6 +104,25 @@ func getCar(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(cars)
 }
+
+func addCar(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("# Add car")
+
+	var db sql.DB = getDBConn()
+	var car Car = getCarFromRequest(r)
+
+	var lastInsertId int
+
+	err := db.QueryRow("INSERT INTO car(status, model, age, race, fuel_type, price, description) VALUES ($1,$2,$3,$4,$5,$6,$7) returning id;",
+		car.Status, car.Model, car.Age, car.Race, car.Fuel_type, car.Price, car.Description).Scan(&lastInsertId)
+	checkErr(err)
+
+	car.Id = lastInsertId
+
+	w.Header().Add("Access-Control-Allow-Origin", "*")
+
+	json.NewEncoder(w).Encode(car)
+}
 func checkErr(err error) {
 	if err != nil {
 		panic(err)
