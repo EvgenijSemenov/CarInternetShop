@@ -23,9 +23,9 @@ type Car struct {
 }
 
 const (
-	DB_USER     = "postgres"
+	DB_USER = "postgres"
 	DB_PASSWORD = "secret"
-	DB_NAME     = "shop_car"
+	DB_NAME = "shop_car"
 
 	API_URI = "/api/v1/"
 )
