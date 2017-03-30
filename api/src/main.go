@@ -230,6 +230,25 @@ func getCarFromRequest(r *http.Request) Car {
 	return car
 }
 
+func addUser(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("# Add user")
+
+	var db sql.DB = getDBConn()
+	var user User = getUserFromRequest(r)
+
+	var lastInsertId int
+
+	err := db.QueryRow("INSERT INTO \"user\"(First_name, Last_name, Email, Pass_hash) VALUES ($1, $2, $3, $4) returning id;",
+		user.First_name, user.Last_name, user.Email, user.Pass_hash).Scan(&lastInsertId)
+	checkErr(err)
+
+	user.Id = lastInsertId
+
+	w.Header().Add("Access-Control-Allow-Origin", "*")
+
+	json.NewEncoder(w).Encode(user)
+}
+
 func getUserFromRequest(r *http.Request) User {
 	var user User
 
