@@ -40,11 +40,13 @@ const (
 
 func main() {
 	router := mux.NewRouter().StrictSlash(true)
+
 	router.HandleFunc(API_URI + "/car/all", getAllCars).Methods("GET")
 	router.HandleFunc(API_URI + "/car/{carId}", getCar).Methods("GET")
 	router.HandleFunc(API_URI + "/car/add", addCar).Methods("POST")
 	router.HandleFunc(API_URI + "/car/update", updateCar).Methods("POST")
 	router.HandleFunc(API_URI + "/car/delete", deleteCar).Methods("POST")
+
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
