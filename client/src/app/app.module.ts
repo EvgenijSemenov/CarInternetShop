@@ -11,6 +11,7 @@ import { RouterModule }   from '@angular/router';
 import { EditGoodComponent } from './edit-good/edit-good.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { RegistrationComponent } from './registration/registration.component';
+import {UserService} from "./service/user.service";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import { RegistrationComponent } from './registration/registration.component';
       }
     ])
   ],
-  providers: [CarService],
+  providers: [CarService, UserService],
   bootstrap: [AppComponent],
 
 })
