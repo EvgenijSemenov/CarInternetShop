@@ -47,6 +47,8 @@ func main() {
 	router.HandleFunc(API_URI + "/car/update", updateCar).Methods("POST")
 	router.HandleFunc(API_URI + "/car/delete", deleteCar).Methods("POST")
 
+	router.HandleFunc(API_URI + "/user/add", addUser).Methods("POST")
+
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
