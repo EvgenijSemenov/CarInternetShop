@@ -10,6 +10,7 @@ import { AddGoodComponent } from './add-advertisement/add-advertisement.componen
 import { RouterModule }   from '@angular/router';
 import { EditGoodComponent } from './edit-good/edit-good.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AuthorizationComponent } from './authorization/authorization.component'
     GoodListComponent,
     AddGoodComponent,
     EditGoodComponent,
-    AuthorizationComponent
+    AuthorizationComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +41,10 @@ import { AuthorizationComponent } from './authorization/authorization.component'
       {
         path: 'authorization',
         component: AuthorizationComponent
+      },
+      {
+        path: 'registration',
+        component: RegistrationComponent
       }
     ])
   ],
