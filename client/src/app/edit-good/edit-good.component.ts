@@ -13,7 +13,7 @@ export class EditGoodComponent implements OnInit {
   private car = new Car(null);
   private errorMessage: any;
 
-  constructor(private carService: CarService, private route: ActivatedRoute,private router: Router) {}
+  constructor(private carService: CarService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     let routeId = this.route.snapshot.params['id'];
