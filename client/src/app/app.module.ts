@@ -35,6 +35,10 @@ import { AuthorizationComponent } from './authorization/authorization.component'
       {
         path: 'edit-good/:id',
         component: EditGoodComponent
+      },
+      {
+        path: 'authorization',
+        component: AuthorizationComponent
       }
     ])
   ],
