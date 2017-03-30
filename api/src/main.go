@@ -22,6 +22,12 @@ type Car struct {
 	Description 	string `json:"description"`
 }
 
+type User struct {
+	Id         int `json:"id"`
+	First_name string `json:"first_name"`
+	Last_name  string `json:"last_name"`
+	Email      string `json:"email"`
+	Pass_hash  string `json:"pass_hash"`
 }
 
 const (
