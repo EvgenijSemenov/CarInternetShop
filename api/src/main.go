@@ -12,14 +12,16 @@ import (
 )
 
 type Car struct {
-	Id int `json:"id"`
-	Status string `json:"status"`
-	Model string `json:"model"`
-	Age int `json:"age"`
-	Race int `json:"race"`
-	Fuel_type string `json:"fuel_type"`
-	Price int64 `json:"price"`
-	Description string `json:"description"`
+	Id 		int `json:"id"`
+	Status 		string `json:"status"`
+	Model 		string `json:"model"`
+	Age 		int `json:"age"`
+	Race 		int `json:"race"`
+	Fuel_type 	string `json:"fuel_type"`
+	Price 		int64 `json:"price"`
+	Description 	string `json:"description"`
+}
+
 }
 
 const (
