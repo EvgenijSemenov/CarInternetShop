@@ -1,0 +1,35 @@
+<div class="col-md-6 col-md-offset-3">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Реєстрація</h3>
+    </div>
+    <div class="panel-body">
+      <form>
+        <div class="form-group">
+          <label for="login">Логін</label>
+          <input type="text" class="form-control" name="login" id="login" required/>
+        </div>
+        <div class="form-group">
+          <label for="first_name">Ім'я</label>
+          <input type="text" class="form-control" name="first_name" id="first_name" required/>
+        </div>
+        <div class="form-group">
+          <label for="last_name">Прізвище</label>
+          <input type="text" class="form-control" name="last_name" id="last_name" required/>
+        </div>
+        <div class="form-group">
+          <label for="email">Електронна пошта</label>
+          <input type="text" class="form-control" name="email" id="email" required/>
+        </div>
+        <div class="form-group">
+          <label for="password">Пароль</label>
+          <input type="password" class="form-control" name="password" id="password" required>
+        </div>
+        <div class="col-md-12 text-center">
+          <button type="submit" class="btn btn-success" (click)="updateCar()">Зареєструватись</button>
+          <button type="button" class="btn " routerLink=''>На головну</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
