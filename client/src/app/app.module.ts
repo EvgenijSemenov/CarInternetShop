@@ -9,13 +9,15 @@ import {CarService} from "./service/car.service";
 import { AddGoodComponent } from './add-advertisement/add-advertisement.component';
 import { RouterModule }   from '@angular/router';
 import { EditGoodComponent } from './edit-good/edit-good.component';
+import { AuthorizationComponent } from './authorization/authorization.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GoodListComponent,
     AddGoodComponent,
-    EditGoodComponent
+    EditGoodComponent,
+    AuthorizationComponent
   ],
   imports: [
     BrowserModule,
