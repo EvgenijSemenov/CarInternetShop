@@ -230,6 +230,37 @@ func getCarFromRequest(r *http.Request) Car {
 	return car
 }
 
+func getUserFromRequest(r *http.Request) User {
+	var user User
+
+	var parsed map[string]interface{}
+
+	body, err := ioutil.ReadAll(r.Body)
+	fmt.Println("getUserFromRequest body:" + string(body))
+	checkErr(err)
+
+	err = json.Unmarshal(body, &parsed)
+	checkErr(err)
+
+	if (parsed["id"] != nil) {
+		user.Id = int(parsed["id"].(float64))
+	}
+	if (parsed["first_name"] != nil) {
+		user.First_name = parsed["first_name"].(string)
+	}
+	if (parsed["last_name"] != nil) {
+		user.Last_name = parsed["last_name"].(string)
+	}
+	if (parsed["email"] != nil) {
+		user.Email = parsed["email"].(string)
+	}
+	if (parsed["pass_hash"] != nil) {
+		user.Pass_hash = parsed["pass_hash"].(string)
+	}
+
+	return user
+}
+
 func checkErr(err error) {
 	if err != nil {
 		panic(err)
