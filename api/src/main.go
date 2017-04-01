@@ -9,26 +9,9 @@ import (
 	"database/sql"
 	_ "github.com/lib/pq"
 	"io/ioutil"
+	
+	"entity"
 )
-
-type Car struct {
-	Id 		int `json:"id"`
-	Status 		string `json:"status"`
-	Model 		string `json:"model"`
-	Age 		int `json:"age"`
-	Race 		int `json:"race"`
-	Fuel_type 	string `json:"fuel_type"`
-	Price 		int64 `json:"price"`
-	Description 	string `json:"description"`
-}
-
-type User struct {
-	Id         int `json:"id"`
-	First_name string `json:"first_name"`
-	Last_name  string `json:"last_name"`
-	Email      string `json:"email"`
-	Pass_hash  string `json:"pass_hash"`
-}
 
 const (
 	DB_USER = "postgres"
@@ -70,10 +53,10 @@ func getAllCars(w http.ResponseWriter, r *http.Request) {
 	rows, err := db.Query("SELECT * FROM car")
 	checkErr(err)
 
-	var cars []Car
+	var cars []entity.Car
 
 	for rows.Next() {
-		var car Car
+		var car entity.Car
 		var description sql.NullString
 		var price sql.NullInt64
 
@@ -101,10 +84,10 @@ func getCar(w http.ResponseWriter, r *http.Request) {
 	rows, err := db.Query("SELECT * FROM car WHERE id=" + getCarId)
 	checkErr(err)
 
-	var cars []Car
+	var cars []entity.Car
 
 	for rows.Next() {
-		var car Car
+		var car entity.Car
 		var description sql.NullString
 		var price sql.NullInt64
 
@@ -125,7 +108,7 @@ func addCar(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("# Add car")
 
 	var db sql.DB = getDBConn()
-	var car Car = getCarFromRequest(r)
+	var car entity.Car = getCarFromRequest(r)
 
 	var lastInsertId int
 
@@ -190,13 +173,13 @@ func updateCar(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode("OK")
 }
 
-func getCarFromRequest(r *http.Request) Car {
-	var car Car
+func getCarFromRequest(r *http.Request) entity.Car {
+	var car entity.Car
 
 	var parsed map[string]interface{}
 
 	body, err := ioutil.ReadAll(r.Body)
-	fmt.Println("getCarFromRequest body:" + string(body))
+	fmt.Println("getentity.CarFromRequest body:" + string(body))
 	checkErr(err)
 
 	err = json.Unmarshal(body, &parsed)
@@ -234,7 +217,7 @@ func addUser(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("# Add user")
 
 	var db sql.DB = getDBConn()
-	var user User = getUserFromRequest(r)
+	var user entity.User = getUserFromRequest(r)
 
 	var lastInsertId int
 
@@ -249,8 +232,8 @@ func addUser(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(user)
 }
 
-func getUserFromRequest(r *http.Request) User {
-	var user User
+func getUserFromRequest(r *http.Request) entity.User {
+	var user entity.User
 
 	var parsed map[string]interface{}
 
