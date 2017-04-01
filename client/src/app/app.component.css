@@ -1,0 +1,23 @@
+.header {
+  position: relative;
+  background: url(../assets/images/main_header.jpg);
+  background-size: cover;
+  height: 300px;
+  margin-bottom: 20px;
+}
+
+.header-text {
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 10px 12px;
+  color: white;
+  font-size: 28px;
+  margin-bottom: auto;
+}
+
+.centered-axis-xy {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}

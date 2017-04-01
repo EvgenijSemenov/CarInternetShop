@@ -17,10 +17,9 @@
     </div>
   </div>
 </nav>
-<div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <h1>{{title}}</h1>
-    <router-outlet></router-outlet>
-  </div>
+<div class="header" *ngIf="router.url == '/'">
+  <span class="header-text centered-axis-xy">Вітаємо в інтернет магазині "Car shop"!</span>
 </div>
-
+<div class="col-md-8 col-md-offset-2">
+  <router-outlet></router-outlet>
+</div>
