@@ -6,15 +6,15 @@
     <div class="panel-body">
       <form>
         <div class="form-group">
-          <label for="login">Логін</label>
-          <input type="text" class="form-control" name="login" id="login" required/>
+          <label for="login">Email</label>
+          <input type="text" class="form-control" [(ngModel)]="email" name="email" id="login" required/>
         </div>
         <div class="form-group">
           <label for="password">Пароль</label>
-          <input type="text" class="form-control" name="password" id="password" required>
+          <input type="text" class="form-control" [(ngModel)]="password" name="password" id="password" required>
         </div>
         <div class="col-md-12 text-center">
-          <button type="submit" class="btn btn-success" (click)="updateCar()">Увійти</button>
+          <button type="submit" class="btn btn-success" (click)="login()">Увійти</button>
           <button type="button" class="btn " routerLink=''>На головну</button>
         </div>
       </form>
