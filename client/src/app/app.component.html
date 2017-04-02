@@ -1,17 +1,20 @@
 <nav class="navbar navbar-default">
   <div class="container">
-    <ul class="nav navbar-nav">
+    <ul class="nav navbar-nav" *ngIf="authorization.isAuthorizedUser()">
       <li>
         <a routerLink="/add-good"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Додати оголошення</a>
       </li>
     </ul>
     <div class="pull-right">
       <ul class="nav navbar-nav">
-        <li>
+        <li *ngIf="!authorization.isAuthorizedUser()">
           <a routerLink="/authorization">Авторизація</a>
         </li>
-        <li>
+        <li *ngIf="!authorization.isAuthorizedUser()">
           <a routerLink="/registration">Реєстрація</a>
+        </li>
+        <li *ngIf="authorization.isAuthorizedUser()">
+          <a (click)="authorization.removeToken()" routerLink="">Вихід</a>
         </li>
       </ul>
     </div>
