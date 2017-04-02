@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
+import {Authorization} from "./security/authorization";
 
 @Component({
   selector: 'app-root',
@@ -9,12 +10,12 @@ import {Router} from "@angular/router";
 
 export class AppComponent {
 
-  public isAuthUser: boolean = false;
+  public authorization: Authorization = new Authorization();
 
   constructor(private router: Router) {}
 
   ngOnInit() {
-    let authToken = localStorage.getItem('auth-token');
-    console.log(this.router.url);
+    this.authorization.removeToken();
   }
+
 }
