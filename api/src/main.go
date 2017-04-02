@@ -9,8 +9,13 @@ import (
 	"database/sql"
 	_ "github.com/lib/pq"
 	"io/ioutil"
-	
+	"github.com/dgrijalva/jwt-go"
+	"crypto/md5"
+
 	"entity"
+	"time"
+	"errors"
+	"response"
 )
 
 const (
@@ -19,6 +24,7 @@ const (
 	DB_NAME = "shop_car"
 
 	API_URI = "/api/v1"
+
 )
 
 func main() {
@@ -31,6 +37,7 @@ func main() {
 	router.HandleFunc(API_URI + "/car/delete", deleteCar).Methods("POST")
 
 	router.HandleFunc(API_URI + "/user/add", addUser).Methods("POST")
+	router.HandleFunc(API_URI + "/user/login", loginUser).Methods("POST")
 
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
@@ -232,6 +239,56 @@ func addUser(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(user)
 }
 
+func loginUser(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("# Login user")
+
+	var db sql.DB = getDBConn()
+	var user entity.User = getUserFromRequest(r)
+
+	rows, err := db.Query("SELECT first_name, last_name, email, pass_hash FROM \"user\" WHERE email='" + user.Email + "'" )
+
+	var tokenString string
+	if rows.Next() {
+		var firstName string
+		var lastName string
+		var email string
+		var passHash string
+
+		err = rows.Scan(&firstName, &lastName, &email, &passHash)
+		checkErr(err)
+
+		hash := md5.New()
+		b := []byte(user.Email + ":" + user.Pass)
+		hash.Write(b)
+		str := fmt.Sprintf("%x", hash.Sum(nil))
+		fmt.Println(str)
+
+		if str == passHash {
+			token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+				"first_name": firstName,
+				"last_name": lastName,
+				"email": email,
+				"exp": time.Now().Add(time.Hour * 12).Unix(),
+			})
+
+			tokenString, err = token.SignedString([]byte("secret"))
+			fmt.Println("secc")
+		} else {
+			fmt.Println("err")
+			err = errors.New("Incorrect email or password")
+		}
+	} else {
+		err = errors.New("User not found")
+	}
+
+	w.Header().Add("Access-Control-Allow-Origin", "*")
+
+	result := make(map[string]interface{})
+	result["auth-token"] = tokenString
+
+	json.NewEncoder(w).Encode(response.BuildResponse(result, err))
+}
+
 func getUserFromRequest(r *http.Request) entity.User {
 	var user entity.User
 
@@ -258,6 +315,9 @@ func getUserFromRequest(r *http.Request) entity.User {
 	}
 	if (parsed["pass_hash"] != nil) {
 		user.Pass_hash = parsed["pass_hash"].(string)
+	}
+	if (parsed["pass"] != nil) {
+		user.Pass = parsed["pass"].(string)
 	}
 
 	return user
