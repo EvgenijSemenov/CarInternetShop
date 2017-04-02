@@ -12,9 +12,10 @@ type Car struct {
 }
 
 type User struct {
-	Id         int `json:"id"`
-	First_name string `json:"first_name"`
-	Last_name  string `json:"last_name"`
-	Email      string `json:"email"`
-	Pass_hash  string `json:"pass_hash"`
+	Id		int `json:"id"`
+	First_name	string `json:"first_name"`
+	Last_name	string `json:"last_name"`
+	Email		string `json:"email"`
+	Pass_hash	string `json:"pass_hash"`
+	Pass		string `json:"pass"`
 }
